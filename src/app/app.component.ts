@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'angular-forms';
+  form:any
+  
+  onsubmit(form:NgForm){
+    console.log(form)
+  }
+  defultcountry='india';
+  firstname:string | undefined
+  lastname:string | undefined
+  email:any
 }
