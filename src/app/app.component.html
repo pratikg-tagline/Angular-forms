@@ -1,44 +1,120 @@
+<div class="row">
+  <div class="col-6">
+    <div class="container">
+      <h1>Template Driven forms</h1>
+      <form
+        action="action_page.php"
+        (ngSubmit)="onsubmit(myForm.value)"
+        #myForm="ngForm"
+      >
+        <label for="fname">First Name</label>
+        <input
+          type="text"
+          name="firstname"
+          placeholder="Your name.."
+          required
+          ngModel
+          [(ngModel)]="firstname"
+          #fname="ngModel"
+        />
 
-
-
-
-<div class="container">
-  <h1>Template Driven forms</h1>
-    <form action="action_page.php" (ngSubmit)="onsubmit(myForm)" #myForm="ngForm">
-  
-      <label for="fname">First Name</label>
-      <input type="text" name="firstname" placeholder="Your name.." required  ngModel [(ngModel)]="firstname"  #fname="ngModel">
-     
         <small *ngIf="fname.invalid && fname.touched">firstname required</small>
-        <span *ngIf="firstname">you entred:  {{firstname}}</span>
-     
-  <br>
-      <label for="lname">Last Name</label>
-      <input type="text"  name="lastname" placeholder="Your last name.." required ngModel [(ngModel)]="lastname"  #lname="ngModel">
-      <div>
-        <small *ngIf="lname.invalid && lname.touched">lastname required</small>
-        <span *ngIf="lastname">you entred: {{lastname}}</span>
-      </div>
+        <span *ngIf="firstname">you entred: {{ firstname }}</span>
 
-      <label for="email">Email</label>
-      <input type="text"  name="email" placeholder="Your email.." required  ngModel #email="ngModel">
-      <div>
-        <small *ngIf="email.invalid && email.touched">email required</small>
+        <br />
+        <label for="lname">Last Name</label>
+        <input
+          type="text"
+          name="lastname"
+          placeholder="Your last name.."
+          required
+          ngModel
+          [(ngModel)]="lastname"
+          #lname="ngModel"
+        />
+        <div>
+          <small *ngIf="lname.invalid && lname.touched"
+            >lastname required</small
+          >
+          <span *ngIf="lastname">you entred: {{ lastname }}</span>
+        </div>
+
+        <label for="email">Email</label>
+        <input
+          type="text"
+          name="email"
+          placeholder="Your email.."
+          required
+          ngModel
+          #email="ngModel"
+        />
+        <div>
+          <small *ngIf="email.invalid && email.touched">email required</small>
+        </div>
        
-      </div>
-  
-      <label for="country">Country</label>
-      <select  name="country" required [ngModel]="defultcountry" #country="ngModel">
-        <option value="india">india</option>
-        <option value="australia">Australia</option>
-        <option value="canada">Canada</option>
-        <option value="usa">USA</option>
-      </select>
-  
-      <label for="subject">Subject</label>
-      <textarea  name="subject" placeholder="Write something.." style="height:200px" required ngModel #textarea="ngModel"></textarea>
-  
-      <button type="submit" value="Submit" [disabled]="!myForm.valid">Submit button</button>
-  
-    </form>
+       
+
+        <label for="country">Country</label>
+        <select
+          name="country"
+          required
+          [ngModel]="defultcountry"
+          #country="ngModel"
+        >
+          <option value="india">india</option>
+          <option value="australia">Australia</option>
+          <option value="canada">Canada</option>
+          <option value="usa">USA</option>
+        </select>
+
+        <label for="subject">Subject</label>
+        <textarea
+          name="subject"
+          placeholder="Write something.."
+          style="height: 200px"
+          required
+          ngModel
+          #textarea="ngModel"
+        ></textarea>
+
+        <button
+          type="submit"
+          value="Submit"
+          (click)="datashow(myForm.value)"
+          [disabled]="!myForm.valid"
+        >
+          Submit button
+        </button>
+      </form>
+    </div>
   </div>
+  <div class="col-6">
+    <div class="table">
+      <table>
+        <tr>
+         <th>id</th>
+          <th>firstname</th>
+          <th>lastname</th>
+          <th>email</th>
+          <th>country</th>
+          <th>subject</th>
+          <th>edit</th>
+          <th>delete</th>
+        </tr>
+       
+       
+        <tr *ngFor="let object of array; let i=index">
+          <td>{{object.id}}</td>
+          <td>{{object.firstname}}</td>
+          <td>{{object.lastname}}</td>
+          <td>{{object.email}}</td>
+          <td>{{object.country}}</td>
+          <td>{{object.subject}}</td>
+         
+          <td><button >edit</button></td>
+          <td><button (click)='BookDelete(i)'>delete</button></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
