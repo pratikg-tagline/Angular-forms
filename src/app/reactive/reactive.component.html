@@ -1,44 +1,178 @@
-<div class="container">
-  <h1>reactive Driven forms</h1>
-  <form action="action_page.php" [formGroup]="signupForm" (ngSubmit)="postData(signupForm.value)" >
-     
-    <div>
-        <label for="fname">First Name</label>
-        <input type="text" name="firstname" formControlName="fname" placeholder="Your name.." required />
-    </div>
-    
-    <br />
-    <div>
-        <label for="lname">Last Name</label>
-        <input type="text"name="lastname" formControlName="lname"  placeholder="Your last name.." required/>
-    </div>
-    
-    <div>
-        <label for="email">Email</label>
-        <input type="text" name="email" formControlName="email" placeholder="Your email.." required/>
-    </div>
+<div class="box">
+  <div class="row">
+    <div class="col-6">
+      <div class="container">
+        <h1>Reactive Forms</h1>
+        <form action="action_page.php" [formGroup]="signupForm">
+          <div>
+            <label class="text-dark" for="fname">First Name</label>
+            <input
+              type="text"
+              name="firstname"
+              formControlName="firstname"
+              class="form-control"
+              placeholder="Your name.."
+              aria-describedby="emailHelp"
+            />
+            <small class="form-text text-muted" *ngIf=" errorshow['firstname'].touched && errorshow['firstname'].invalid" >firstname required</small>
+          </div>
 
-   <div>
-    Gender:
-    <input type="radio" id="html"  formControlName="male"  name="male" value="HTML" required />
-    <label for="male">male</label>
-    <input type="radio" name="male" formControlName="female" value="CSS" required />
-    <label for="female">female</label><br /><br />
-   </div>
-   
-    <label for="phone">Enter your phone number:</label><br />
-    <input type="text" id="phone" name="phone" formControlName="phone" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}-[0-9]{2}" required/>
-    <br />
-    <br />
+          <div>
+            <label class="text-dark" for="lname">Last Name</label>
+            <input
+              type="text"
+              name="lastname"
+              formControlName="lastname"
+              class="form-control"
+              placeholder="Your last name.."
+            />
+            <small
+              class="form-text text-muted"
+              *ngIf="
+                errorshow['lastname'].touched && errorshow['lastname'].invalid
+              "
+              >lastname required</small
+            >
+          </div>
 
-    <!-- <label for="country">Country</label>
-    <select name="country" required>
-      <option value="india">india</option>
-      <option value="australia">Australia</option>
-      <option value="canada">Canada</option>
-      <option value="usa">USA</option>
-    </select> -->
+          <div>
+            <label class="text-dark" for="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              formControlName="email"
+              class="form-control"
+              placeholder="Your email.."
+            />
+            <small
+              class="form-text text-muted"
+              *ngIf="errorshow['email'].touched && errorshow['email'].invalid"
+              >email required</small
+            >
+          </div>
 
-    <button type="submit" value="postData">Submit button</button>
-  </form>
+          <div class="d-flex">
+            <label class="text-dark" for="gender">Gender :</label>
+            <div>
+              <a>
+                <input
+                  type="radio"
+                  name="gender"
+                  value="male"
+                  id="male"
+                  formControlName="gender"
+                />
+                <label
+                  class="form-check-label"
+                  class="text-dark"
+                  for="male"
+                  >Male</label>
+              </a>
+            </div>
+            <div>
+              <a>
+                <input
+                  type="radio"
+                  name="gender"
+                  value="female"
+                  id="female"
+                  formControlName="gender"
+                />
+                <label class="text-dark" for="female">Female</label>
+              </a>
+            </div>
+          </div>
+
+          <label class="text-dark" for="phone"
+            >Enter your phone number:</label
+          >
+          <input
+            type="text"
+            id="phone"
+            name="phone"
+            formControlName="phone"
+            minlength="10"
+            class="form-control"
+            pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}-[0-9]{2}"
+          />
+          <small
+            class="form-text text-muted"
+            *ngIf="errorshow['phone'].touched && errorshow['phone'].invalid"
+            >phone required</small
+          ><br />
+
+         
+
+          <!-- <label for="country">Country</label>
+        <select name="country" required>
+          <option value="india">india</option>
+          <option value="australia">Australia</option>
+          <option value="canada">Canada</option>
+          <option value="usa">USA</option>
+        </select> -->
+
+          <div class="text-center">
+            <button
+              type="button"
+              class="btn btn-outline-success"
+              (click)="datashow(signupForm.value)"
+            >
+              {{ submit }}
+            </button>
+          </div>
+        </form>
+        <br />
+        <p class="text-center">Forms:{{ signupForm.status }}</p>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="table">
+        <table>
+          <tr>
+            <th>id</th>
+            <th>{{ firstname }}</th>
+            <th>{{ lastname }}</th>
+            <th>{{ email }}</th>
+            <th>{{ gender }}</th>
+            <th>{{ phone }}</th>
+            <th>{{ country }}</th>
+            <th>{{ state }}</th>
+            <th>{{ city }}</th>
+            <th>{{ edit }}</th>
+            <th>{{ delete }}</th>
+          </tr>
+
+          <tr *ngFor="let object of array; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ object.firstname }}</td>
+            <td>{{ object.lastname }}</td>
+            <td>{{ object.email }}</td>
+            <td>{{ object.gender }}</td>
+            <td>{{ object.phone }}</td>
+            <td>{{ object.country }}</td>
+            <td>{{ object.state }}</td>
+            <td>{{ object.city }}</td>
+
+
+            <td>
+              <button
+                class="btn btn-outline-primary btn-lg"
+                (click)="editdata(object)"
+              >
+                edit
+              </button>
+            </td>
+            <td>
+              <button
+                class="btn btn-outline-danger btn-lg"
+                (click)="BookDelete(i)"
+              >
+                delete
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
