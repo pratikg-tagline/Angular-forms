@@ -14,7 +14,13 @@
               placeholder="Your name.."
               aria-describedby="emailHelp"
             />
-            <small class="form-text text-muted" *ngIf=" errorshow['firstname'].touched && errorshow['firstname'].invalid" >firstname required</small>
+            <small
+              class="form-text text-muted"
+              *ngIf="
+                errorshow['firstname'].touched && errorshow['firstname'].invalid
+              "
+              >firstname required</small
+            >
           </div>
 
           <div>
@@ -62,11 +68,9 @@
                   id="male"
                   formControlName="gender"
                 />
-                <label
-                  class="form-check-label"
-                  class="text-dark"
-                  for="male"
-                  >Male</label>
+                <label class="form-check-label" class="text-dark" for="male"
+                  >Male</label
+                >
               </a>
             </div>
             <div>
@@ -83,9 +87,7 @@
             </div>
           </div>
 
-          <label class="text-dark" for="phone"
-            >Enter your phone number:</label
-          >
+          <label class="text-dark" for="phone">Enter your phone number:</label>
           <input
             type="text"
             id="phone"
@@ -101,7 +103,62 @@
             >phone required</small
           ><br />
 
-         
+          <div formGroupName="address">
+            <div>
+              <label for="name">{{ country }}</label>
+              <select
+                aria-label="Default select example"
+                name="country"
+                id="country"
+                class="form-select col-8"
+                formControlName="country"
+                (change)="changeCountry($event)"
+              >
+                <option selected>Select Country</option>
+                <option
+                  *ngFor="let country of countryList"
+                  [value]="country.id"
+                >
+                  {{ country.name }}
+                </option>
+              </select>
+            </div>
+            <div>
+              <label for="name">{{ state }}</label>
+              <select
+                placeholder="Phantasyland"
+                class="form-select col-8"
+                aria-label="Default select example"
+                name="state"
+                id="state"
+                formControlName="state"
+                (change)="changeState($event)"
+              >
+                <option selected>Select State</option>
+                <option *ngFor="let state of states" [value]="state.id">
+                  {{ state.name }}
+                </option>
+              </select>
+            </div>
+
+            <div>
+              <label for="name">{{ city }}</label>
+              <select
+                placeholder="Phantasyland"
+                aria-label="Default select example"
+                name="city"
+                id="city"
+                class="form-select col-8"
+                formControlName="city"
+              >
+                <option selected>Select City</option>
+
+                <option *ngFor="let city of citys" [value]="city.id">
+                  {{ city.name }}
+                </option>
+              </select>
+            </div>
+          </div>
 
           <!-- <label for="country">Country</label>
         <select name="country" required>
@@ -149,10 +206,9 @@
             <td>{{ object.email }}</td>
             <td>{{ object.gender }}</td>
             <td>{{ object.phone }}</td>
-            <td>{{ object.country }}</td>
-            <td>{{ object.state }}</td>
-            <td>{{ object.city }}</td>
-
+            <td>{{ object.address.country }}</td>
+            <td>{{ object.address.state }}</td>
+            <td>{{ object.address.city }}</td>
 
             <td>
               <button
