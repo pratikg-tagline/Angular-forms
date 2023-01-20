@@ -15,7 +15,7 @@ export class ReactiveComponent implements OnInit {
   firstname: string = 'Firstname';
   lastname: string = 'Lastname';
   email: string = 'Email';
-  gender: string = 'Gender :';
+  gender: string = 'Gender';
   phone: string = 'Phone';
   userId!: number;
   edit: string = 'Edit';
@@ -25,16 +25,23 @@ export class ReactiveComponent implements OnInit {
   city: string = 'City';
   enteryourphonenumber:string='Enter your phone number:'
   reactiveforms:string='Reactive Forms'
-  firstnamerequired:string='Firstname Required'
-  lastnamerequired:string='Lastname Required'
-  emailrequired:string='Email Required'
+  firstnamerequired:string='Please Provide a Firstname '
+  lastnamerequired:string='Please Provide a Lastname '
+  emailrequired:string='Please Provide a Properly Formatted Email address '
   male:string='Male'
   female:string='Female'  
-  phonerequired:string='Phone Required'
+  phonerequired:string='Please Provide a Phone Number'
   selectcountry:string='Select Country'
   selectstate:string='Select State'
   selectcity:string='Select City'
   forms:string='Forms:'
+  countryrequired:string='Please Provide a Country Name'
+  staterequired:string='Please Provide a State Name'
+  cityrequired:string='Please Provide a City Name'
+  genderrequired:string='Please Provide a Gender Name'
+  conditionrequired:string='You must agree before submitting.'
+  submmited:boolean=false
+  formerror:string=''
   states: any;
   citys: any;
   array:View[] = [
@@ -137,7 +144,9 @@ export class ReactiveComponent implements OnInit {
   myForm: any;
   submit: string = 'Submit';
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder) {
+  
+  }
   ngOnInit() {
     this.signupForm = this.formBuilder.group({
       firstname: this.formBuilder.control('', Validators.required),
@@ -150,13 +159,30 @@ export class ReactiveComponent implements OnInit {
         state: this.formBuilder.control('', Validators.required),
         city: this.formBuilder.control('', Validators.required),
       }),
+      
+      lastcondition:this.formBuilder.control('',Validators.requiredTrue)
+      
     });
   }
 
   get errorshow() {
     return this.signupForm.controls;
   }
+  get errorcountry() {
+    return this.signupForm.get('address.country');
+  }
 
+  get errorstate(){
+    return this.signupForm.get("address.state")
+  }
+
+  get errorcity(){
+    return this.signupForm.get("address.city")
+  }
+
+  get errorcheckbox(){
+    return this.signupForm.get('lastcondition')
+  }
   BookDelete(data: number) {
     this.array.splice(data, 1);
   }
@@ -165,8 +191,9 @@ export class ReactiveComponent implements OnInit {
    // console.log('userId :>> ', this.userId);
     this.submit = 'Update';
     //console.log(data.id);
+   
     this.signupForm.patchValue(data);
-    //console.log('data :>> ', data);
+    console.log('data :>> ', data);
   }
   changeCountry(c: any) {
     this.states = this.stateList.filter(
@@ -178,12 +205,15 @@ export class ReactiveComponent implements OnInit {
       (con: CityList) => con.stateId == d.target.value
     );
   }
+
   datashow(signupForm: any) {
+    this.formerror=''
     const add = this.signupForm.value.address;
     //console.log('add :>> ', add); 
     const currentCountry = this.countryList.find(
       (couy: Countrylist) => couy.id == add.country
     )?.name;
+    
 
     const currentState = this.stateList.find(
       (state: StateList) => state.id == add.state
@@ -192,6 +222,8 @@ export class ReactiveComponent implements OnInit {
       (city: CityList) => city.id == add.city
     )?.name;
     if (this.signupForm.invalid) {
+      this.formerror='Please field form correctly'
+      this.submmited=true
       return;
     } else {
       this.submit = 'Submit';
@@ -221,11 +253,11 @@ export class ReactiveComponent implements OnInit {
 
        // console.log('this.array :>> ', this.array);
         this.array.push(data);
-        //console.log('data :>> ', this.array);
+        console.log('data :>> ', this.array);
       }
       this.userId = 0;
       this.signupForm.reset();
-     // console.log('this.reactiveForm.value :>> ', this.signupForm);
+      console.log('this.reactiveForm.value :>> ', this.signupForm);
     }
   }
 

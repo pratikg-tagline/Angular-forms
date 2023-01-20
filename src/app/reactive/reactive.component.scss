@@ -62,11 +62,20 @@
 }
   input.ng-invalid.ng-touched{
     border: 1px solid red;
+     ;
   }
- 
-  small{
-    color: red;
+  
+  small.ng-invalid.ng-touched{
+    border: 1px solid red;
   }
+  
+ .form-check-input{
+  margin-top: 10px;
+ }
+.form-check-label{
+  margin-left: 5px;
+  margin-top: 9px;
+}
   span{
     color: rgb(46, 192, 97);
   }
